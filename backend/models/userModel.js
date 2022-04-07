@@ -15,4 +15,4 @@ const userModel= mongoose.Schema(
 
 const User=mongoose.model("User", userModel);
 
-module.exports = Message; 
+module.exports = User; 
