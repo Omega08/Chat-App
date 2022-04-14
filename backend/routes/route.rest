@@ -1,0 +1,20 @@
+POST http://localhost:5000/api/user
+Content-Type: application/json
+
+{
+    "name": "Om",
+    "email": "Om@email.com",
+    "username": "MegaOm",
+    "password": "Hello",
+    "pic": "http://res.cloudinary.com/due6e520h/image/upload/v1649648655/hyaiyuwrxusadr3dvoew.jpg"
+}
+
+###
+
+POST http://localhost:5000/api/user/login
+Content-Type: application/json
+
+{
+    "username": "omega",
+    "password": "omega"
+}
