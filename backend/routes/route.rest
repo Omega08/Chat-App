@@ -18,3 +18,8 @@ Content-Type: application/json
     "username": "omega",
     "password": "omega"
 }
+
+###
+
+Get http://localhost:5000/api/user?search=a
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTZjYTcyMmZmZGM0YTJhMjgyMjJkYSIsImlhdCI6MTY0OTg1OTQwNywiZXhwIjoxNjUyNDUxNDA3fQ.dMX0DNYy88Y2ekrCSoGng4TmxtUbd2S4MwJLnZKfmXE

@@ -1,20 +1,24 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import { Box } from "@mantine/core";
+import ChatBox from "../components/ChatBox";
+import SideDrawer from "../components/miscellaneous/SideDrawer";
+import MyChats from "../components/MyChats";
+import { ChatState } from "../context/ChatProvider";
 
 const ChatPage = () => {
-  const [chats, setChats] = useState([]);
-  const fetchChats = async () => {
-    const { data } = await axios.get("/api/chat");
-    setChats(data);
-  };
-  useEffect(() => {
-    fetchChats();
-  }, []);
+  const { user } = ChatState();
   return (
-    <div>
-      {chats.map((chat) => (
-        <div key={chat._id}>{chat.chatName}</div>
-      ))}
+    <div style={{ width: "100vw", height: "100vh", margin: "0", padding: "0" }}>
+      {user && <SideDrawer />}
+      <Box
+        sx={(theme) => ({
+          display: "flex",
+          justifyContent: "space-between",
+          width: "100%",
+        })}
+      >
+        {user && <MyChats />}
+        {user && <ChatBox />}
+      </Box>
     </div>
   );
 };

@@ -36,7 +36,6 @@ const Login = () => {
         },
         config
       );
-      console.log(JSON.stringify(data));
       localStorage.setItem("userInfo", JSON.stringify(data));
       setLoading(false);
       history.push("/chats");
@@ -79,7 +78,6 @@ const Login = () => {
           style={{ borderRadius: "1000px" }}
           onClick={() => {
             let n = form.validate();
-            console.log(n);
             if (n.hasErrors) return;
             SubmitHandler();
           }}

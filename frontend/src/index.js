@@ -5,16 +5,17 @@ import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 import { MantineProvider } from "@mantine/core";
 import { NotificationsProvider } from "@mantine/notifications";
+import ChatProvider from "./context/ChatProvider";
 
 ReactDOM.render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <MantineProvider>
-        <NotificationsProvider position="bottom-right">
+  <BrowserRouter>
+    <MantineProvider>
+      <NotificationsProvider position="bottom-right">
+        <ChatProvider>
           <App />
-        </NotificationsProvider>
-      </MantineProvider>
-    </BrowserRouter>
-  </React.StrictMode>,
+        </ChatProvider>
+      </NotificationsProvider>
+    </MantineProvider>
+  </BrowserRouter>,
   document.getElementById("root")
 );
