@@ -14,6 +14,7 @@ const ChatPage = () => {
           display: "flex",
           justifyContent: "space-between",
           width: "100%",
+          height: "calc(92.7% - 20px)",
         })}
       >
         {user && <MyChats />}

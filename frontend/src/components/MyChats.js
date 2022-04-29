@@ -1,4 +1,5 @@
 import {
+  Avatar,
   Box,
   Button,
   Group,
@@ -27,7 +28,6 @@ const MyChats = () => {
         },
       };
       const { data } = await axios.get("/api/chat", config);
-
       setChats(data);
       console.log(chats);
       console.log("here");
@@ -50,7 +50,7 @@ const MyChats = () => {
       smallerThan="sm"
       styles={{ display: selectedChat ? "none" : "flex", width: "100%" }}
     >
-      <MediaQuery largerThan="sm" styles={{ display: "flex", width: "31%" }}>
+      <MediaQuery largerThan="sm" styles={{ display: "flex", width: "29%" }}>
         <Box
           style={{
             flexDirection: "column",
@@ -95,28 +95,49 @@ const MyChats = () => {
             {chats ? (
               <Stack
                 style={{
-                  overflowY: "scroll",
+                  overflowY: "auto",
+                  height: "100%",
                 }}
+                m={10}
               >
-                {chats.map((chat) => {
-                  <Box
+                {chats.map((chat) => (
+                  <Group
                     style={{
                       cursor: "pointer",
-                      backgroundColor: selectedChat === chat ? "grey" : "white",
-                      color: selectedChat === chat ? "black" : "white",
-                      borderRadius: "lg",
+                      backgroundColor:
+                        selectedChat === chat ? "rgb(54, 120, 219)" : "white",
+                      color: selectedChat === chat ? "white" : "blue",
+                      borderRadius: "20px",
+                      height: "60px",
+                      width: "90%",
+                      margin: " 5px auto",
+                      alignContent: "center",
                     }}
-                    px={5}
-                    py={5}
+                    px={10}
+                    py={2}
                     key={chat._id}
+                    onClick={() => setSelectedChat(chat)}
                   >
-                    <Text>
+                    <Avatar
+                      src={chat.users[1].pic}
+                      my={2}
+                      radius="100%"
+                      alt={user.name}
+                      size="3rem"
+                      style={{ border: "2px solid white" }}
+                    />
+                    <Text
+                      style={{
+                        fontSize: "1.2rem",
+                        fontWeight: "400",
+                      }}
+                    >
                       {!chat.isGroupChat
                         ? getSender(loggedUser, chat.users)
                         : chat.chatName}
                     </Text>
-                  </Box>;
-                })}
+                  </Group>
+                ))}
               </Stack>
             ) : (
               <ChatLoading />

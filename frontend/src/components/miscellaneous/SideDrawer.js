@@ -4,6 +4,7 @@ import {
   Button,
   Drawer,
   Group,
+  Loader,
   MediaQuery,
   Menu,
   MenuLabel,
@@ -109,6 +110,7 @@ const SideDrawer = () => {
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
+          height: "7.3%",
           backgroundColor: "white",
           width: "calc(100%-10px)",
           borderWidth: "4px",
@@ -215,6 +217,7 @@ const SideDrawer = () => {
             />
           ))
         )}
+        {ChatLoading && <Loader color={"green"} />}
       </Drawer>
     </>
   );
