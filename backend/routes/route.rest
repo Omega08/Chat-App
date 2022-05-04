@@ -3,23 +3,47 @@ Content-Type: application/json
 
 {
     "name": "Om",
-    "email": "Om@email.com",
-    "username": "MegaOm",
-    "password": "Hello",
+    "email": "Omsk@email.com",
+    "username": "kilojjh",
+    "password": "kilobwkbdkj",
     "pic": "http://res.cloudinary.com/due6e520h/image/upload/v1649648655/hyaiyuwrxusadr3dvoew.jpg"
 }
 
 ###
 
-POST http://localhost:5000/api/user/login
+POST http://localhost:5000/api/chat/group
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTZjYTcyMmZmZGM0YTJhMjgyMjJkYSIsImlhdCI6MTY0OTg1OTQwNywiZXhwIjoxNjUyNDUxNDA3fQ.dMX0DNYy88Y2ekrCSoGng4TmxtUbd2S4MwJLnZKfmXE
 
 {
-    "username": "omega",
-    "password": "omega"
+    "name": "Colors",
+    "users": "['62557bc318cef771b9a88b87', '6255a71a3f0c4ba623257790']"
 }
 
 ###
 
 Get http://localhost:5000/api/user?search=a
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTZjYTcyMmZmZGM0YTJhMjgyMjJkYSIsImlhdCI6MTY0OTg1OTQwNywiZXhwIjoxNjUyNDUxNDA3fQ.dMX0DNYy88Y2ekrCSoGng4TmxtUbd2S4MwJLnZKfmXE
+
+###
+PUT http://localhost:5000/api/chat/rename
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTQzMjdiNTM0YmQ2ZWZlNDc1MGU1NCIsImlhdCI6MTY1MTI1NTIwNywiZXhwIjoxNjUzODQ3MjA3fQ.V3yGsdpV9Dx3tHbVdkeiOYXYxmng6BitP0s2xaBrFPo
+
+{
+    "ChatId": "626e8af60c093762cbf749a5",
+    "ChatName": "Aman Ki Gang"
+}
+
+###
+POST  http://localhost:5000/api/message
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTQzMjdiNTM0YmQ2ZWZlNDc1MGU1NCIsImlhdCI6MTY1MTI1NTIwNywiZXhwIjoxNjUzODQ3MjA3fQ.V3yGsdpV9Dx3tHbVdkeiOYXYxmng6BitP0s2xaBrFPo
+
+{
+    "content": "hello",
+    "chatId": "6256dd59942d61c181fa87dd"
+}
+
+###
+GET http://localhost:5000/api/message/6256dd59942d61c181fa87dd
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTQzMjdiNTM0YmQ2ZWZlNDc1MGU1NCIsImlhdCI6MTY1MTI1NTIwNywiZXhwIjoxNjUzODQ3MjA3fQ.V3yGsdpV9Dx3tHbVdkeiOYXYxmng6BitP0s2xaBrFPo

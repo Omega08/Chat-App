@@ -4,6 +4,7 @@ import {
   Button,
   Group,
   MediaQuery,
+  ScrollArea,
   Stack,
   Text,
   Title,
@@ -14,9 +15,10 @@ import React, { useEffect, useState } from "react";
 import { ChatState } from "../context/ChatProvider";
 import { AiOutlineUsergroupAdd } from "react-icons/ai";
 import ChatLoading from "./miscellaneous/ChatLoading";
-import { getSender } from "../config/chatLogic";
+import { getSender, getSenderFull } from "../config/chatLogic";
+import GroupChatModal from "./miscellaneous/GroupChatModal";
 
-const MyChats = () => {
+const MyChats = ({ fetchAgain }) => {
   const [loggedUser, setLoggedUser] = useState();
   const { selectedChat, setSelectedChat, user, setChats, chats } = ChatState();
 
@@ -29,8 +31,6 @@ const MyChats = () => {
       };
       const { data } = await axios.get("/api/chat", config);
       setChats(data);
-      console.log(chats);
-      console.log("here");
     } catch (error) {
       showNotification({
         title: "Error!",
@@ -43,7 +43,7 @@ const MyChats = () => {
   useEffect(() => {
     setLoggedUser(JSON.parse(localStorage.getItem("userInfo")));
     fetchChats();
-  }, []);
+  }, [fetchAgain]);
 
   return (
     <MediaQuery
@@ -57,9 +57,11 @@ const MyChats = () => {
             alignItems: "center",
             backgroundColor: "white",
             borderRadius: "lg",
+            boxShadow: "0 5px 10px 5px rgb(104, 146, 214)",
             borderWidth: "1px",
           }}
           p={5}
+          m={2}
         >
           <Box
             px={3}
@@ -74,13 +76,15 @@ const MyChats = () => {
             }}
           >
             My Chats
-            <Button
-              variant="subtle"
-              radius={100}
-              rightIcon={<AiOutlineUsergroupAdd size={24} />}
-            >
-              New Group
-            </Button>
+            <GroupChatModal>
+              <Button
+                variant="subtle"
+                radius={100}
+                rightIcon={<AiOutlineUsergroupAdd size={24} />}
+              >
+                New Group
+              </Button>
+            </GroupChatModal>
           </Box>
           <Box
             style={{
@@ -105,7 +109,7 @@ const MyChats = () => {
                     style={{
                       cursor: "pointer",
                       backgroundColor:
-                        selectedChat === chat ? "rgb(54, 120, 219)" : "white",
+                        selectedChat === chat ? "rgb(54, 120, 219)" : "White",
                       color: selectedChat === chat ? "white" : "blue",
                       borderRadius: "20px",
                       height: "60px",
@@ -119,10 +123,10 @@ const MyChats = () => {
                     onClick={() => setSelectedChat(chat)}
                   >
                     <Avatar
-                      src={chat.users[1].pic}
+                      src={getSenderFull(user, chat.users).pic}
                       my={2}
                       radius="100%"
-                      alt={user.name}
+                      alt={getSender(user, chat.users)}
                       size="3rem"
                       style={{ border: "2px solid white" }}
                     />

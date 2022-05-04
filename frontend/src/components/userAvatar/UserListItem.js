@@ -5,14 +5,14 @@ const UserListItem = ({ user, handleFunction }) => {
   return (
     <>
       <Group
-        m={10}
+        m={1}
         ml={1}
-        p={10}
+        p={7}
         onClick={handleFunction}
         style={{
           display: "flex",
           flexDirection: "row",
-          borderRadius: "25px",
+          borderRadius: "10px",
         }}
         sx={(theme) => ({
           backgroundColor: theme.colors.gray[2],

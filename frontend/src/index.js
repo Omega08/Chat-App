@@ -9,13 +9,13 @@ import ChatProvider from "./context/ChatProvider";
 
 ReactDOM.render(
   <BrowserRouter>
-    <MantineProvider>
-      <NotificationsProvider position="bottom-right">
-        <ChatProvider>
+    <ChatProvider>
+      <MantineProvider>
+        <NotificationsProvider position="bottom-right">
           <App />
-        </ChatProvider>
-      </NotificationsProvider>
-    </MantineProvider>
+        </NotificationsProvider>
+      </MantineProvider>
+    </ChatProvider>
   </BrowserRouter>,
   document.getElementById("root")
 );

@@ -1,6 +1,5 @@
 import { Avatar, Button, Center, Modal, Text, Title } from "@mantine/core";
 import React, { useState } from "react";
-import { CgProfile } from "react-icons/cg";
 
 const ProfileModal = ({ user, self }) => {
   const [opened, setOpened] = useState(false);
@@ -49,11 +48,20 @@ const ProfileModal = ({ user, self }) => {
           </Button>
         </Center>
       </Modal>
-      <Button variant="subtle" onClick={() => setOpened(true)}>
+      <Button
+        variant="subtle"
+        radius={100}
+        p={0}
+        style={{
+          height: "fit-content",
+          outline: "3px solid rgba(0, 0, 255, 0.3)",
+        }}
+        onClick={() => setOpened(true)}
+      >
         {self ? (
           <Avatar alt={user.name} src={user.pic} radius="xl" size="1.8rem" />
         ) : (
-          <CgProfile />
+          <Avatar alt={user.name} src={user.pic} radius={100} size="2.3rem" />
         )}
       </Button>
     </>

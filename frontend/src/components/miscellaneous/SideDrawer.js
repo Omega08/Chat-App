@@ -1,5 +1,4 @@
 import {
-  Avatar,
   Box,
   Button,
   Drawer,
@@ -11,6 +10,7 @@ import {
   Text,
   TextInput,
   Tooltip,
+  Indicator,
 } from "@mantine/core";
 import React from "react";
 import { FaSearch, FaRegBell, FaChevronDown } from "react-icons/fa";
@@ -24,9 +24,19 @@ import { showNotification } from "@mantine/notifications";
 import axios from "axios";
 import ChatLoading from "./ChatLoading";
 import UserListItem from "../userAvatar/UserListItem";
+import { getSender } from "../../config/chatLogic";
+import { Effect } from "react-notification-badge";
+import NotificationBadge from "react-notification-badge";
 
 const SideDrawer = () => {
-  const { user, setSelectedChat, chats, setChats } = ChatState();
+  const {
+    user,
+    setSelectedChat,
+    chats,
+    setChats,
+    notification,
+    setNotification,
+  } = ChatState();
   const history = useHistory();
   const [opened, setOpened] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -64,7 +74,6 @@ const SideDrawer = () => {
         config
       );
       setLoading(false);
-      console.log(data);
       setSearchResult(data);
     } catch (error) {
       console.log("error");
@@ -90,7 +99,6 @@ const SideDrawer = () => {
       const { data } = await axios.post("/api/chat", { userId }, config);
       if (!chats.find((c) => c._id === data._id)) setChats([data, ...chats]);
       setSelectedChat(data);
-      console.log(data);
       setLoadingChat(false);
       setOpened(false);
     } catch (error) {
@@ -159,11 +167,53 @@ const SideDrawer = () => {
             shadow="xl"
             control={
               <Button variant="subtle">
+                <div
+                  style={{
+                    position: "absolute",
+                    width: "3px",
+                    height: "3px",
+                    left: "20px",
+                    top: 0,
+                  }}
+                >
+                  <NotificationBadge
+                    count={notification.length}
+                    effect={Effect.SCALE}
+                  />
+                </div>
                 <FaRegBell color="blue" size="1.5rem" />
               </Button>
             }
           >
             <MenuLabel>Notifications</MenuLabel>
+            {!notification.length && <Menu.Item>No New Messages</Menu.Item>}
+            {notification.map((notifi) => {
+              return (
+                <Menu.Item
+                  sx={(theme) => ({
+                    "&:hover": {
+                      backgroundColor: theme.colors.blue[4],
+                      cursor: "pointer",
+                      color: "white",
+                    },
+                  })}
+                  key={notifi._id}
+                  onClick={() => {
+                    setSelectedChat(notifi.chat);
+                    setNotification(notification.filter((n) => n !== notifi));
+                  }}
+                >
+                  <Text>
+                    {notifi.chat.isGroupChat
+                      ? `New Message in ${notifi.chat.chatName}`
+                      : `New Message from ${getSender(
+                          user,
+                          notifi.chat.users
+                        )}`}
+                  </Text>
+                </Menu.Item>
+              );
+            })}
           </Menu>
           <ProfileModal user={user} self={true}></ProfileModal>
           <Menu
