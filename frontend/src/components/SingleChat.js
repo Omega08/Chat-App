@@ -13,6 +13,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { ChatState } from "../context/ChatProvider";
 import { MdArrowBack } from "react-icons/md";
 import { IoSend } from "react-icons/io5";
+import { IoMdMic, IoMdMicOff } from "react-icons/io";
 import { getSender, getSenderFull } from "../config/chatLogic";
 import ProfileModal from "./miscellaneous/ProfileModal";
 import UpdateGroupModal from "./miscellaneous/UpdateGroupModal";
@@ -22,6 +23,9 @@ import ScrollableChats from "./ScrollableChats";
 import io from "socket.io-client";
 import Lottie from "lottie-react";
 import Typing from "../animation/typing.json";
+import SpeechRecognition, {
+  useSpeechRecognition,
+} from "react-speech-recognition";
 
 const ENDPOINT = "http://localhost:5000";
 var socket, selectedChatCompare;
@@ -33,8 +37,10 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   const [socketConnected, setSocketConnected] = useState(false);
   const [typing, setTyping] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
+  const [listening, setlistening] = useState(true);
   const { user, selectedChat, setSelectedChat, notification, setNotification } =
     ChatState();
+  const { transcript, resetTranscript } = useSpeechRecognition();
 
   useEffect(() => {
     socket = io(ENDPOINT);
@@ -71,8 +77,6 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
       });
     }
   };
-
-  console.log(notification);
 
   useEffect(() => {
     fetchMessages();
@@ -123,6 +127,19 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
           color: "red",
         });
       }
+    }
+  };
+
+  const textToSpeech = (val) => {
+    if (val) {
+      SpeechRecognition.startListening();
+      setlistening(false);
+      // setNewMessage("Listening...");
+      console.log(transcript);
+    } else {
+      SpeechRecognition.stopListening();
+      setlistening(true);
+      setNewMessage(transcript);
     }
   };
 
@@ -270,9 +287,33 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                   width: "100%",
                 }}
                 rightSection={
-                  <ActionIcon onClick={sendMessage}>
-                    <IoSend size={25} />
-                  </ActionIcon>
+                  <Box
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                    }}
+                  >
+                    <ActionIcon onClick={sendMessage}>
+                      {listening ? (
+                        <IoMdMic
+                          size={25}
+                          onClick={() => {
+                            textToSpeech(true);
+                          }}
+                        />
+                      ) : (
+                        <IoMdMicOff
+                          size={25}
+                          onClick={() => {
+                            textToSpeech(false);
+                          }}
+                        />
+                      )}
+                    </ActionIcon>
+                    <ActionIcon onClick={sendMessage} mr={30}>
+                      <IoSend size={25} />
+                    </ActionIcon>
+                  </Box>
                 }
               />
             </Box>
