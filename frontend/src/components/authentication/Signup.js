@@ -115,18 +115,21 @@ const Signup = () => {
           "Content-type": "application/json",
         },
       };
-      const { data } = await axios.post(
-        "/api/user",
-        {
-          name: form.getInputProps("name").value,
-          email: form.getInputProps("email").value,
-          username: form.getInputProps("username").value,
-          password: form.getInputProps("password").value,
-          pic: pic,
-        },
-        config
-      );
-      localStorage.setItem("userInfo", JSON.stringify(data));
+      await axios
+        .post(
+          "/api/user",
+          {
+            name: form.getInputProps("name").value,
+            email: form.getInputProps("email").value,
+            username: form.getInputProps("username").value,
+            password: form.getInputProps("password").value,
+            pic: pic,
+          },
+          config
+        )
+        .then((res) => {
+          localStorage.setItem("userInfo", JSON.stringify(res.data));
+        });
     } catch (error) {
       showNotification({
         title: "Something went wrong!!",
@@ -241,7 +244,10 @@ const Signup = () => {
               }
               if (picError !== "" && active === 1) return;
               if (nextText === "Submit") SubmitHandler();
-              if (nextText === "Done") history.push("/chats");
+              if (nextText === "Done") {
+                history.push("/chats");
+                return;
+              }
               nextStep();
             }}
             loading={loading}

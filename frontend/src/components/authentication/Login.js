@@ -28,15 +28,18 @@ const Login = () => {
           "Content-type": "application/json",
         },
       };
-      const { data } = await axios.post(
-        "/api/user/login",
-        {
-          username: form.getInputProps("username").value,
-          password: form.getInputProps("password").value,
-        },
-        config
-      );
-      localStorage.setItem("userInfo", JSON.stringify(data));
+      await axios
+        .post(
+          "/api/user/login",
+          {
+            username: form.getInputProps("username").value,
+            password: form.getInputProps("password").value,
+          },
+          config
+        )
+        .then((res) => {
+          localStorage.setItem("userInfo", JSON.stringify(res.data));
+        });
       setLoading(false);
       history.push("/chats");
     } catch (error) {

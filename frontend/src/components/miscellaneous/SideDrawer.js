@@ -69,6 +69,8 @@ const SideDrawer = () => {
         },
       };
 
+      console.log(config);
+
       const { data } = await axios.get(
         `/api/user?search=${form.getInputProps("search").value}`,
         config

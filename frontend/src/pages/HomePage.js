@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Tabs, Title, Text } from "@mantine/core";
 import Signup from "../components/authentication/Signup";
 import Login from "../components/authentication/Login";
@@ -6,12 +6,11 @@ import { useHistory } from "react-router-dom";
 
 const HomePage = () => {
   const history = useHistory();
-
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("userInfo"));
 
     if (user) history.push("/chats");
-  }, [history]);
+  }, []);
 
   return (
     <Container
